@@ -1,0 +1,13 @@
+{
+  "type": "scatter",
+  "title": "Accuracy vs. latency (Pareto view)",
+  "xLabel": "latency (ms)",
+  "yLabel": "accuracy",
+  "xFormat": "int",
+  "yFormat": "f2",
+  "note": "Up and to the left is better. Bubble size ∝ model parameters.",
+  "series": [
+    { "name": "Ours", "highlight": true, "points": [[14, 0.91, 120], [22, 0.93, 340]] },
+    { "name": "Baselines", "points": [[38, 0.86, 210], [55, 0.88, 640], [72, 0.9, 1300], [90, 0.84, 90], [110, 0.79, 60]] }
+  ]
+}

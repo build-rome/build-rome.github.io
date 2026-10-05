@@ -1,0 +1,36 @@
+# Deploy the static site to GitHub Pages on every push to the default branch.
+# No build step — the repository root IS the site. Enable Pages for the repo
+# (Settings → Pages → Source: GitHub Actions) and this workflow does the rest.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      # cache-busting: stamp the commit onto the local CSS/JS links so a fresh deploy never
+      # runs with a browser's cached stylesheet or script (Pages caches assets for 10 min)
+      - run: sed -i -E "s#(assets/(css|js)/[A-Za-z0-9_.-]+\.(css|js))\"#\1?v=${GITHUB_SHA::7}\"#g" index.html && grep -o 'assets/js/viewer.js?v=[0-9a-f]*' index.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

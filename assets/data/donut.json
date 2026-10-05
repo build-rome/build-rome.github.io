@@ -1,0 +1,14 @@
+{
+  "type": "donut",
+  "title": "Training mix by scenario type",
+  "centerLabel": "12.4M",
+  "centerSub": "scenarios",
+  "valueFormat": "int",
+  "items": [
+    { "label": "Intersections", "value": 4200 },
+    { "label": "Merges", "value": 3100 },
+    { "label": "Roundabouts", "value": 2400 },
+    { "label": "Lane changes", "value": 1700 },
+    { "label": "Parking", "value": 1000 }
+  ]
+}

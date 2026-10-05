@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Building Rome from a Single Image | Applied Intuition</title>
+<meta name="description" content="Our method reconstructs detailed scene meshes from one photograph, completing geometry beyond the observed view for indoor, outdoor, and large-scale scenes.">
+<meta name="theme-color" content="#006CFA">
+
+<link rel="icon" href="assets/brand/favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/brand/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/apple-touch-icon.png">
+
+<!-- Open Graph / social -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Building Rome from a Single Image">
+<meta property="og:description" content="Our method reconstructs detailed scene meshes from one photograph, completing geometry beyond the observed view for indoor, outdoor, and large-scale scenes.">
+
+<!-- Enables JS-only progressive enhancements (scroll reveal, etc.) -->
+<script>document.documentElement.className += " js";</script>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" crossorigin>
+<link rel="preload" href="assets/fonts/AppliedSansDisplay-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/AppliedSansText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/XCharter-Roman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to content</a>
+
+<!-- ===================== Header ===================== -->
+<header class="site-header">
+  <div class="header-pill">
+    <a class="brand-mark" href="#top" aria-label="Back to top">
+      <span class="brand-word">Building <span class="accent">Rome</span> from a Single Image</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav" id="nav">
+      <a href="#demo">Demo</a>
+      <a href="#overview">Overview</a>
+      <a href="#comparisons">Comparisons</a>
+      <a href="https://www.appliedintuition.com/research" target="_blank" rel="noopener">Research ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===================== Hero / masthead ===================== -->
+  <section class="hero">
+    <div class="wide split hero-split">
+      <div class="hero-intro reveal">
+        <p class="eyebrow">Single-image 3D scene reconstruction</p>
+        <h1>Building <span class="accent">Rome</span> from a Single Image</h1>
+        <div class="hero-meta">
+          <p class="byline"><span class="names">
+            <span class="author"><a href="https://domejiraphon.github.io/" target="_blank" rel="noopener">Jiraphon Yenphraphai</a><sup>1,2</sup></span>
+            <span class="author"><a href="https://fangli333.github.io/" target="_blank" rel="noopener">Fang Li</a><sup>1,3</sup></span>
+            <span class="author"><a href="https://hk.linkedin.com/in/tianshuo-xu-04463336b" target="_blank" rel="noopener">Tianshuo Xu</a><sup>1</sup></span>
+            <span class="author"><a href="https://deppmeng.github.io/" target="_blank" rel="noopener">Depu Meng</a><sup>1</sup></span>
+            <span class="author"><a href="https://www.linkedin.com/in/quentin-herau-phd-38378b140" target="_blank" rel="noopener">Quentin Herau</a><sup>1</sup></span>
+            <span class="author"><a href="https://www.linkedin.com/in/yihan-hu96" target="_blank" rel="noopener">Yihan Hu</a><sup>1</sup></span>
+            <span class="author"><a href="https://raymond-yeh.com/" target="_blank" rel="noopener">Raymond A. Yeh</a><sup>2</sup></span>
+            <span class="author"><a href="https://zhanwei.site/" target="_blank" rel="noopener">Wei Zhan</a><sup>1,4</sup></span>
+          </span></p>
+          <p class="affil">
+            <span><sup>1</sup>Applied Intuition</span>
+            <span><sup>2</sup>Purdue University</span>
+            <span><sup>3</sup>UIUC</span>
+            <span><sup>4</sup>UC Berkeley</span>
+          </p>
+        </div>
+        <div class="actions">
+          <span class="btn btn-disabled" aria-disabled="true">Paper (on release)</span>
+          <span class="btn btn-disabled" aria-disabled="true">Code (on release)</span>
+          <button class="btn" type="button" id="bibtex-btn">BibTeX</button>
+        </div>
+      </div>
+      <!-- teaser: sparse-structure voxels -> full scene mesh. Video files are
+           git-ignored: host on a CDN before deploying and swap the src (CLAUDE.md). -->
+      <figure class="hero-media reveal">
+        <!-- H.264 at 1024 px; phones get the 512 px encode via data-small (swapped in
+             by main.js before the first load). -->
+        <video poster="assets/media/teaser_poster.jpg" muted loop playsinline preload="auto" data-autoplay
+               data-small="assets/media/teaser_512.mp4"
+               aria-label="From a single photo of the Colosseum, sparse voxels grow into the full reconstructed scene mesh.">
+          <source src="assets/media/teaser.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== Results reel ===================== -->
+  <section id="results">
+    <div class="wide reveal">
+      <!-- results reel: 47 scenes, input photo -> depth sweep -> mesh flythrough, six at a time.
+           Video files are git-ignored (see CLAUDE.md); phones get results_720.mp4 via data-small. -->
+      <figure class="results-reel">
+        <video poster="assets/media/results_poster.jpg" muted loop playsinline preload="metadata" data-autoplay
+               data-small="assets/media/results_720.mp4"
+               aria-label="Results on 47 scenes: each input photo sweeps front to back into its reconstructed mesh, then the camera flies through it.">
+          <source src="assets/media/results.mp4" type="video/mp4">
+        </video>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===================== Interactive demo ===================== -->
+  <!-- Mesh levels are meshopt-compressed glTF (gltfpack, ~7 MB at 1.5M faces); nothing
+       loads until the visitor presses play. assets/demo/scenes.json lists the levels. -->
+  <section id="demo">
+    <div class="wide reveal">
+      <p class="eyebrow">Interactive</p>
+      <h2>Explore the reconstructions</h2>
+      <p class="prose">Drag to orbit, scroll to zoom, <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to move, <kbd>Q</kbd><kbd>E</kbd> down/up.
+        <strong>Measure</strong>: pick two points to get their distance in metres.</p>
+      <p class="prose muted demo-note">Note: meshes are simplified to about 1.5M faces for this web viewer; the paper figures and videos use the full-resolution meshes.</p>
+      <div class="demo">
+        <div class="viewer" data-base="assets/demo" data-scene="atlas6">
+          <button class="viewer-measure" type="button" title="Measure: pick two points on the mesh" aria-pressed="false">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 7 2 2M10 4l2 2M13 13l2 2M16 10l2 2"/></svg>
+            Measure</button>
+          <button class="viewer-reset" type="button" title="Back to the input view">&#8634;</button>
+        </div>
+        <div class="demo-thumbs" role="tablist" aria-label="Scenes">
+          <button class="demo-thumb is-active" type="button" data-scene="atlas6" data-name="Japanese bridge" title="Japanese bridge">
+            <img src="assets/demo/atlas6/thumb.jpg" width="128" height="128" alt="Japanese bridge" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="nex_2" data-name="Grand Palace, Bangkok" title="Grand Palace, Bangkok">
+            <img src="assets/demo/nex_2/thumb.jpg" width="128" height="128" alt="Grand Palace, Bangkok" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="nerf1" data-name="Office plant" title="Office plant">
+            <img src="assets/demo/nerf1/thumb.jpg" width="128" height="128" alt="Office plant" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="atlas11" data-name="Box handling" title="Box handling">
+            <img src="assets/demo/atlas11/thumb.jpg" width="128" height="128" alt="Box handling" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="moge_4" data-name="Crew portrait" title="Crew portrait">
+            <img src="assets/demo/moge_4/thumb.jpg" width="128" height="128" alt="Crew portrait" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="france7" data-name="Royal bedchamber" title="Royal bedchamber">
+            <img src="assets/demo/france7/thumb.jpg" width="128" height="128" alt="Royal bedchamber" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="atlas10" data-name="Harbour diorama" title="Harbour diorama">
+            <img src="assets/demo/atlas10/thumb.jpg" width="128" height="128" alt="Harbour diorama" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="robot8" data-name="Robot in a living room" title="Robot in a living room">
+            <img src="assets/demo/robot8/thumb.jpg" width="128" height="128" alt="Robot in a living room" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="moge_3" data-name="Anime garden" title="Anime garden">
+            <img src="assets/demo/moge_3/thumb.jpg" width="128" height="128" alt="Anime garden" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="moge_7" data-name="Home office" title="Home office">
+            <img src="assets/demo/moge_7/thumb.jpg" width="128" height="128" alt="Home office" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="atlas33" data-name="Garden robot" title="Garden robot">
+            <img src="assets/demo/atlas33/thumb.jpg" width="128" height="128" alt="Garden robot" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="nerf8" data-name="Dinosaur skeleton" title="Dinosaur skeleton">
+            <img src="assets/demo/nerf8/thumb.jpg" width="128" height="128" alt="Dinosaur skeleton" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="france6" data-name="Notre-Dame, Paris" title="Notre-Dame, Paris">
+            <img src="assets/demo/france6/thumb.jpg" width="128" height="128" alt="Notre-Dame, Paris" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="new_york_apt4" data-name="Townhouse lounge" title="Townhouse lounge">
+            <img src="assets/demo/new_york_apt4/thumb.jpg" width="128" height="128" alt="Townhouse lounge" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="tourist4" data-name="Trevi Fountain" title="Trevi Fountain">
+            <img src="assets/demo/tourist4/thumb.jpg" width="128" height="128" alt="Trevi Fountain" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="soho_house" data-name="Loft kitchen" title="Loft kitchen">
+            <img src="assets/demo/soho_house/thumb.jpg" width="128" height="128" alt="Loft kitchen" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="mipnerf7" data-name="Living room" title="Living room">
+            <img src="assets/demo/mipnerf7/thumb.jpg" width="128" height="128" alt="Living room" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="moge_6" data-name="Land Rover" title="Land Rover">
+            <img src="assets/demo/moge_6/thumb.jpg" width="128" height="128" alt="Land Rover" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="robot6" data-name="Warehouse shelving" title="Warehouse shelving">
+            <img src="assets/demo/robot6/thumb.jpg" width="128" height="128" alt="Warehouse shelving" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="robot5" data-name="Robot at a counter" title="Robot at a counter">
+            <img src="assets/demo/robot5/thumb.jpg" width="128" height="128" alt="Robot at a counter" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="robot12" data-name="Robot in a kitchen" title="Robot in a kitchen">
+            <img src="assets/demo/robot12/thumb.jpg" width="128" height="128" alt="Robot in a kitchen" loading="lazy"></button>
+          <button class="demo-thumb" type="button" data-scene="atlas15" data-name="Toy town" title="Toy town">
+            <img src="assets/demo/atlas15/thumb.jpg" width="128" height="128" alt="Toy town" loading="lazy"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Overview ===================== -->
+  <section id="overview">
+    <div class="wide reveal">
+      <div class="split">
+        <div class="split-text">
+          <p class="eyebrow">Overview</p>
+          <h2>An object generator, redesigned for whole scenes</h2>
+          <ul class="method-points">
+            <li><span class="step step-a" aria-hidden="true">a</span><strong>Adaptive scene chunks.</strong> Chunks grow with distance: small ones keep
+              nearby detail, large ones cover distant buildings.</li>
+            <li><span class="step step-b" aria-hidden="true">b</span><strong>Explicit 2D&ndash;3D conditioning.</strong> Image features are lifted onto the
+              observed surface, and each voxel knows if it is free, visible, or hidden.</li>
+            <li><span class="step step-c" aria-hidden="true">c</span><strong>Autoregressive generation.</strong> Neighbouring chunks reuse overlapping
+              latents, so new geometry stays consistent with the scene.</li>
+          </ul>
+        </div>
+        <figure class="figure">
+          <div class="figure-stage method-stage">
+            <img src="assets/figures/method.jpg" width="1600" height="731" loading="lazy"
+                 alt="Pipeline: (a) the image is lifted with a point map and split into adaptive 3D chunks; (b) each chunk is generated by a sparse-structure transformer conditioned on lifted features and visibility, then a structured-latent transformer; (c) chunks are generated autoregressively with reused latents and decoded into one scene mesh.">
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Comparisons ===================== -->
+  <!-- Video files are git-ignored: host assets/media/comparisons on a CDN before
+       deploying and point data-base (and the static row below) at it (CLAUDE.md). -->
+  <section id="comparisons">
+    <div class="wide reveal">
+      <p class="eyebrow">Comparisons</p>
+      <div class="cmp" tabindex="0" aria-roledescription="carousel" aria-label="Method comparisons"
+           data-base="assets/media/comparisons/" data-scenes="atlas11,atlas13,nerf1,atlas33,atlas6,france6,moge_4,moge_6,tourist2"
+           data-methods="ours,world-tracing,genrecon,volfill,lyra2">
+        <div class="cmp-head" aria-hidden="true">
+          <span data-method="input">Input</span>
+          <span data-method="ours">Ours</span>
+          <span data-method="world-tracing">World Tracing</span>
+          <span data-method="genrecon">GenRecon</span>
+          <span data-method="volfill">VolFill</span>
+          <span data-method="lyra2">Lyra 2.0</span>
+        </div>
+        <div class="cmp-stage">
+          <button class="cmp-arrow cmp-prev" type="button" aria-label="Previous scene">&#8249;</button>
+          <div class="cmp-viewport">
+            <div class="cmp-row">
+              <figure class="cmp-tile"><img src="assets/media/comparisons/atlas11/input.jpg" width="768" height="768" alt="Input photo, scene 1"><figcaption data-method="input">Input</figcaption></figure>
+              <figure class="cmp-tile is-ours"><video src="assets/media/comparisons/atlas11/ours.mp4" poster="assets/media/comparisons/atlas11/ours-poster.jpg" muted loop playsinline preload="none" aria-label="Ours reconstruction, scene 1"></video><figcaption data-method="ours">Ours</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/world-tracing.mp4" poster="assets/media/comparisons/atlas11/world-tracing-poster.jpg" muted loop playsinline preload="none" aria-label="World Tracing reconstruction, scene 1"></video><figcaption data-method="world-tracing">World Tracing</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/genrecon.mp4" poster="assets/media/comparisons/atlas11/genrecon-poster.jpg" muted loop playsinline preload="none" aria-label="GenRecon reconstruction, scene 1"></video><figcaption data-method="genrecon">GenRecon</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/volfill.mp4" poster="assets/media/comparisons/atlas11/volfill-poster.jpg" muted loop playsinline preload="none" aria-label="VolFill reconstruction, scene 1"></video><figcaption data-method="volfill">VolFill</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/lyra2.mp4" poster="assets/media/comparisons/atlas11/lyra2-poster.jpg" muted loop playsinline preload="none" aria-label="Lyra 2.0 reconstruction, scene 1"></video><figcaption data-method="lyra2">Lyra 2.0</figcaption></figure>
+            </div>
+          </div>
+          <button class="cmp-arrow cmp-next" type="button" aria-label="Next scene">&#8250;</button>
+        </div>
+        <div class="cmp-dots"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- BibTeX citation source (hidden); the "BibTeX" button copies this. -->
+<pre id="bibtex-src" hidden>@article{yenphraphai2026rome,
+  title   = {Building Rome from a Single Image},
+  author  = {Yenphraphai, Jiraphon and Li, Fang and Xu, Tianshuo and Meng, Depu and Herau, Quentin and Hu, Yihan and Yeh, Raymond A. and Zhan, Wei},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+
+<!-- ===================== Footer ===================== -->
+<footer class="site-footer">
+  <div class="wide">
+    <div class="foot-grid">
+      <div>
+        <a class="brand-mark" href="#top"><span class="brand-word">Building Rome</span></a>
+        <p class="muted" style="max-width:32ch">Complete 3D scene meshes from a single photograph.</p>
+      </div>
+      <nav>
+        <a href="#demo">Demo</a> ·
+        <a href="#overview">Overview</a> ·
+        <a href="#comparisons">Comparisons</a> ·
+        <a href="https://www.appliedintuition.com" target="_blank" rel="noopener">Applied Intuition ↗</a>
+      </nav>
+    </div>
+    <p class="copyright">© 2026 Applied Intuition.</p>
+  </div>
+</footer>
+
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"}}</script>
+<script type="module" src="assets/js/viewer.js"></script>
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/charts.js" defer></script>
+<script src="assets/js/tables.js" defer></script>
+<script src="assets/js/compare.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "type": "bar",
+  "mode": "grouped",
+  "title": "Throughput by hardware tier",
+  "yLabel": "samples / sec",
+  "yFormat": "si",
+  "note": "Higher is better. Our method (blue) is benchmarked under the same setup as the baselines.",
+  "groups": [
+    { "key": "a100", "label": "A100" },
+    { "key": "h100", "label": "H100" },
+    { "key": "b200", "label": "B200" }
+  ],
+  "series": [
+    { "name": "Ours", "highlight": true, "values": { "a100": 1250000, "h100": 2100000, "b200": 3400000 } },
+    { "name": "Baseline A", "values": { "a100": 420000, "h100": 760000, "b200": 1150000 } },
+    { "name": "Baseline B", "values": { "a100": 610000, "h100": 980000, "b200": 1480000 } }
+  ]
+}

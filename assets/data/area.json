@@ -1,0 +1,15 @@
+{
+  "type": "area",
+  "mode": "stacked",
+  "title": "Scenario hours generated per month",
+  "xLabel": "month",
+  "yLabel": "scenario-hours (K)",
+  "yFormat": "int",
+  "note": "Cumulative stacked composition by scenario source.",
+  "x": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+  "series": [
+    { "name": "Urban", "highlight": true, "values": [12, 18, 27, 39, 52, 68, 85, 104] },
+    { "name": "Highway", "values": [8, 11, 15, 19, 24, 30, 37, 45] },
+    { "name": "Rural", "values": [4, 5, 7, 9, 12, 15, 18, 22] }
+  ]
+}

@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Components & Charts — Research Website Template</title>
+<meta name="description" content="A live gallery of every component and chart type in the research website template, each with a copy-paste snippet.">
+<meta name="theme-color" content="#006CFA">
+<link rel="icon" href="assets/brand/favicon.ico" sizes="32x32">
+<link rel="icon" href="assets/brand/icon.svg" type="image/svg+xml">
+<script>document.documentElement.className += " js";</script>
+<link rel="stylesheet" href="assets/css/styles.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<style>
+  /* gallery chrome — local to this doc page, not part of the design system */
+  .ks-item { margin: var(--space-4) 0 var(--space-6); }
+  .ks-item > h3 { margin-top: 0; }
+  .ks-demo { border: 1px solid var(--gray-line); border-radius: var(--radius); padding: var(--space-3); background: var(--white); }
+  .ks-note { font-family: var(--font-sans); font-size: var(--fs-meta); color: var(--gray); max-width: 72ch; margin: 0 0 var(--space-2); }
+  details.ks-code { margin-top: var(--space-2); }
+  details.ks-code > summary {
+    cursor: pointer; font-family: var(--font-sans); font-size: var(--fs-eyebrow);
+    letter-spacing: .08em; text-transform: uppercase; color: var(--blue); font-weight: 600;
+    list-style: none; user-select: none;
+  }
+  details.ks-code > summary::before { content: "▸ "; }
+  details.ks-code[open] > summary::before { content: "▾ "; }
+  pre.snippet {
+    margin: var(--space-2) 0 0; background: #0f1115; color: #e7e9ee; border-radius: var(--radius);
+    padding: var(--space-3); font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.55; overflow-x: auto;
+  }
+  .ks-toc { columns: 2; gap: var(--space-4); font-family: var(--font-sans); font-size: var(--fs-meta); }
+  .ks-toc a { display: block; padding: 0.2em 0; color: var(--gray); }
+  .ks-toc a:hover { color: var(--blue); text-decoration: none; }
+  @media (max-width: 640px) { .ks-toc { columns: 1; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#top">Skip to content</a>
+
+<header class="site-header">
+  <div class="header-pill">
+    <a class="brand-mark" href="index.html" aria-label="Home"><span class="brand-word">Template · Components</span></a>
+    <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav" id="nav">
+      <a href="#foundations">Foundations</a>
+      <a href="#components">Components</a>
+      <a href="#charts">Charts</a>
+      <a href="index.html">Starter ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wide">
+      <div class="hero-intro reveal">
+        <p class="eyebrow">Kitchen sink</p>
+        <h1>Components &amp; <span class="accent">Charts</span></h1>
+        <p class="lead">Every building block in the template, rendered live, each with a copy-paste
+          snippet. Build pages by composing these — never by inventing new ornament.</p>
+        <nav class="ks-toc" aria-label="Contents">
+          <a href="#typography">Typography &amp; eyebrows</a>
+          <a href="#buttons">Buttons &amp; actions</a>
+          <a href="#badges">Badges &amp; honesty tokens</a>
+          <a href="#stats">Stats &amp; result badge</a>
+          <a href="#cards">Cards &amp; contributions</a>
+          <a href="#figures">Figures &amp; media frames</a>
+          <a href="#tabs">Tabs</a>
+          <a href="#tables">Sortable tables</a>
+          <a href="#quote">Pull quote</a>
+          <a href="#bibtex">BibTeX</a>
+          <a href="#chart-bar">Chart · bar</a>
+          <a href="#chart-line">Chart · line</a>
+          <a href="#chart-scatter">Chart · scatter</a>
+          <a href="#chart-area">Chart · area</a>
+          <a href="#chart-hbar">Chart · horizontal bar</a>
+          <a href="#chart-donut">Chart · donut</a>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FOUNDATIONS =================== -->
+  <section id="foundations">
+    <div class="wide reveal">
+      <p class="eyebrow">Foundations</p>
+      <h2>Type, color, motifs</h2>
+
+      <div class="ks-item" id="typography">
+        <h3>Typography &amp; eyebrows</h3>
+        <p class="ks-note">Three roles: Applied Sans Display (headings), Applied Sans Text (UI/labels),
+          XCharter serif (prose). Hierarchy comes from size, weight, and space — not color or extra fonts.</p>
+        <div class="ks-demo">
+          <p class="eyebrow">Eyebrow · all-caps mono</p>
+          <h2>Heading level two</h2>
+          <h3>Heading level three</h3>
+          <p class="lead">A lead paragraph (standfirst): larger serif on a tight measure for the
+            opening claim of a section.</p>
+          <p>Body prose in XCharter. Confidence comes from specificity — a
+            <mark class="hl">highlighted claim</mark> marks the one thing that matters. Use
+            <strong>bold</strong> sparingly and <a href="#">a link</a> where useful.</p>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;p class="eyebrow"&gt;Eyebrow · all-caps mono&lt;/p&gt;
+&lt;h2&gt;Heading level two&lt;/h2&gt;
+&lt;p class="lead"&gt;A lead paragraph.&lt;/p&gt;
+&lt;p&gt;Body prose with a &lt;mark class="hl"&gt;highlighted claim&lt;/mark&gt;.&lt;/p&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="buttons">
+        <h3>Buttons &amp; actions</h3>
+        <p class="ks-note">One primary (blue) action per view. Secondary actions are outlined.
+          Unreleased resources use the disabled honesty token, never a fake link.</p>
+        <div class="ks-demo">
+          <div class="actions">
+            <a class="btn btn-primary" href="#">Primary →</a>
+            <a class="btn" href="#">Secondary</a>
+            <span class="btn btn-disabled" aria-disabled="true">arXiv (on release)</span>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="actions"&gt;
+  &lt;a class="btn btn-primary" href="#"&gt;Primary →&lt;/a&gt;
+  &lt;a class="btn" href="#"&gt;Secondary&lt;/a&gt;
+  &lt;span class="btn btn-disabled" aria-disabled="true"&gt;arXiv (on release)&lt;/span&gt;
+&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="badges">
+        <h3>Badges &amp; honesty tokens</h3>
+        <div class="ks-demo">
+          <p><span class="status-badge">Published</span>
+             <span class="status-badge status-badge--venue">ICLR 2026</span>
+             <span class="status-badge status-badge--prep">In preparation</span></p>
+          <p>Inline venue after a title: <strong>Method X</strong> <span class="inline-badge">NeurIPS 2026</span></p>
+          <p>A number not yet releasable renders as <span class="tbd"></span>, never invented.</p>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;span class="status-badge status-badge--venue"&gt;ICLR 2026&lt;/span&gt;
+&lt;span class="status-badge status-badge--prep"&gt;In preparation&lt;/span&gt;
+&lt;span class="inline-badge"&gt;NeurIPS 2026&lt;/span&gt;
+&lt;span class="tbd"&gt;&lt;/span&gt;  &lt;!-- renders "to be filled" --&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="stats">
+        <h3>Stat line &amp; result badge</h3>
+        <div class="ks-demo">
+          <div class="statline">
+            <div><div class="stat-num">2.7×</div><div class="stat-cap">throughput vs. baseline</div></div>
+            <div><div class="stat-num">0.90</div><div class="stat-cap">closed-loop score<span class="stat-note">3-seed mean</span></div></div>
+            <div><div class="stat-num">0</div><div class="stat-cap">human demonstrations</div></div>
+          </div>
+          <div class="results-head">
+            <h2 style="margin:0">Headline result</h2>
+            <div class="results-badge">
+              <span class="results-badge-num">#1</span>
+              <span class="results-badge-cap">on the public leaderboard</span>
+            </div>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="statline"&gt;
+  &lt;div&gt;&lt;div class="stat-num"&gt;2.7×&lt;/div&gt;&lt;div class="stat-cap"&gt;throughput vs. baseline&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="results-head"&gt;
+  &lt;h2&gt;Headline result&lt;/h2&gt;
+  &lt;div class="results-badge"&gt;
+    &lt;span class="results-badge-num"&gt;#1&lt;/span&gt;
+    &lt;span class="results-badge-cap"&gt;on the public leaderboard&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== COMPONENTS =================== -->
+  <section id="components">
+    <div class="wide reveal">
+      <p class="eyebrow">Components</p>
+      <h2>Layout &amp; content blocks</h2>
+
+      <div class="ks-item" id="cards">
+        <h3>Cards &amp; contribution triad</h3>
+        <div class="ks-demo">
+          <div class="card-grid grid-2">
+            <div class="card"><h3>Card title</h3><p class="muted">A short supporting sentence for a grouped point or feature.</p></div>
+            <div class="card"><div class="stat">98.6%</div><div class="stat-label">success rate</div></div>
+          </div>
+          <div class="contribs">
+            <div class="contrib"><div class="num">1</div><h3>First contribution</h3><p class="muted">One clause on what it is.</p><p class="contrib-outcome">→ the outcome it enables</p></div>
+            <div class="contrib"><div class="num">2</div><h3>Second contribution</h3><p class="muted">One clause on what it is.</p></div>
+            <div class="contrib"><div class="num">3</div><h3>Third contribution</h3><p class="muted">One clause on what it is.</p></div>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="card-grid grid-2"&gt;
+  &lt;div class="card"&gt;&lt;h3&gt;Card title&lt;/h3&gt;&lt;p class="muted"&gt;…&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="card"&gt;&lt;div class="stat"&gt;98.6%&lt;/div&gt;&lt;div class="stat-label"&gt;success rate&lt;/div&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="contribs"&gt;
+  &lt;div class="contrib"&gt;&lt;div class="num"&gt;1&lt;/div&gt;&lt;h3&gt;First&lt;/h3&gt;&lt;p class="muted"&gt;…&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="figures">
+        <h3>Figures &amp; media frames</h3>
+        <p class="ks-note">Figures sit in a bordered card with a blue-labeled caption. Video/interactive
+          media sits in a 16:9 dark mat. Use <code>.split</code> for the magazine figure-and-text rhythm.</p>
+        <div class="ks-demo">
+          <div class="split">
+            <div class="split-text">
+              <p class="eyebrow">Section</p>
+              <h3 style="margin-top:0">Figure beside text</h3>
+              <p>The figure column is the wider one so diagrams stay legible. Add <code>.split--rev</code> to flip sides.</p>
+            </div>
+            <figure class="figure">
+              <div class="figure-stage"><img src="assets/brand/icon.svg" alt="Placeholder" style="width:90px;opacity:.4"></div>
+              <figcaption><span class="fig-label">Figure 1.</span> A caption that states the takeaway.</figcaption>
+            </figure>
+          </div>
+          <div style="margin-top:var(--space-3)">
+            <div class="media-frame"><div style="display:flex;align-items:center;justify-content:center;height:100%;color:#8a94a3;font-family:var(--font-sans);font-size:var(--fs-meta)">16:9 media frame (drop a &lt;video&gt; here)</div></div>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;figure class="figure"&gt;
+  &lt;div class="figure-stage"&gt;&lt;img src="…" alt="…"&gt;&lt;/div&gt;
+  &lt;figcaption&gt;&lt;span class="fig-label"&gt;Figure 1.&lt;/span&gt; Caption.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;div class="media-frame"&gt;
+  &lt;video src="…" muted loop playsinline data-autoplay&gt;&lt;/video&gt;
+&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="tabs">
+        <h3>Tabs (segmented control)</h3>
+        <p class="ks-note">A pill of options with a sliding blue thumb. Charts inside hidden panels
+          render on first reveal.</p>
+        <div class="ks-demo">
+          <div class="tabs" data-tabs>
+            <div class="tabs-nav">
+              <span class="tabs-slider"></span>
+              <button class="tab-btn is-active" data-tab="a">Overview</button>
+              <button class="tab-btn" data-tab="b">Method</button>
+              <button class="tab-btn" data-tab="c">Results</button>
+            </div>
+            <div class="tab-panel tab-panel--wide" data-panel="a"><p style="margin:0">Panel A content.</p></div>
+            <div class="tab-panel tab-panel--wide" data-panel="b" hidden><p style="margin:0">Panel B content.</p></div>
+            <div class="tab-panel tab-panel--wide" data-panel="c" hidden><p style="margin:0">Panel C content.</p></div>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="tabs" data-tabs&gt;
+  &lt;div class="tabs-nav"&gt;&lt;span class="tabs-slider"&gt;&lt;/span&gt;
+    &lt;button class="tab-btn is-active" data-tab="a"&gt;Overview&lt;/button&gt;
+    &lt;button class="tab-btn" data-tab="b"&gt;Method&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="tab-panel tab-panel--wide" data-panel="a"&gt;…&lt;/div&gt;
+  &lt;div class="tab-panel tab-panel--wide" data-panel="b" hidden&gt;…&lt;/div&gt;
+&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="tables">
+        <h3>Sortable data tables</h3>
+        <p class="ks-note">Click a sortable header to cycle ascending → descending → original.
+          <code>.tbd</code> and dash cells always sort last. Mark leaders with <code>.best</code>.</p>
+        <div class="ks-demo">
+          <div class="table-wrap">
+            <table class="data">
+              <caption><span class="fig-label">Table 1.</span> Closed-loop benchmark (higher is better).</caption>
+              <thead><tr><th>Method</th><th class="sortable">Score</th><th class="sortable">Latency (ms)</th><th class="sortable">Params (M)</th></tr></thead>
+              <tbody>
+                <tr class="is-best"><td>Ours</td><td class="best">0.49</td><td>14</td><td>120</td></tr>
+                <tr><td>Prior SOTA</td><td>0.42</td><td>38</td><td>210</td></tr>
+                <tr><td>Method B</td><td>0.34</td><td>55</td><td>640</td></tr>
+                <tr><td>Method A</td><td>0.29</td><td>90</td><td class="tbd"></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;table class="data"&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Method&lt;/th&gt;&lt;th class="sortable"&gt;Score&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr class="is-best"&gt;&lt;td&gt;Ours&lt;/td&gt;&lt;td class="best"&gt;0.49&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Method A&lt;/td&gt;&lt;td class="tbd"&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;script src="assets/js/tables.js"&gt;&lt;/script&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="quote">
+        <h3>Pull quote</h3>
+        <div class="ks-demo">
+          <blockquote class="pull">The work is the hero; the design gets out of its way.
+            <cite>— the design contract</cite></blockquote>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;blockquote class="pull"&gt;Quote text.&lt;cite&gt;— source&lt;/cite&gt;&lt;/blockquote&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="bibtex">
+        <h3>BibTeX (copy button)</h3>
+        <p class="ks-note">The house pattern: a <code>BibTeX</code> action button that copies a hidden
+          <code>&lt;pre id="bibtex-src"&gt;</code> to the clipboard and flashes "BibTeX copied". No visible
+          code block. Put the button in the hero <code>.actions</code> row; <code>main.js</code> wires it.</p>
+        <div class="ks-demo">
+          <button class="btn" type="button" data-bibtex-src="demo-bibtex-src">BibTeX</button>
+          <pre id="demo-bibtex-src" hidden>@article{yourkey2026,
+  title   = {Project Name},
+  author  = {Author One and Author Two},
+  journal = {arXiv preprint},
+  year    = {2026}
+}</pre>
+        </div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;!-- in the hero .actions row --&gt;
+&lt;button class="btn" type="button" id="bibtex-btn"&gt;BibTeX&lt;/button&gt;
+
+&lt;!-- once, near the end of the page --&gt;
+&lt;pre id="bibtex-src" hidden&gt;@article{key,
+  title = {…}, author = {…}, year = {2026}
+}&lt;/pre&gt;
+&lt;!-- main.js copies #bibtex-src on click.
+     Multiple citations: give each button data-bibtex-src="&lt;id&gt;". --&gt;</code></pre></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== CHARTS =================== -->
+  <section id="charts">
+    <div class="wide reveal">
+      <p class="eyebrow">Charts</p>
+      <h2>Six chart types, one system</h2>
+      <p class="prose">Every chart is declarative: a <code>.chart</code> host with <code>data-chart="&lt;type&gt;"</code>
+        and <code>data-src="&lt;json&gt;"</code>. The library animates on scroll-in, shows exact values on hover,
+        toggles series from the legend, and falls back to <code>data-fallback</code> image if the JSON fails.
+        The <strong>hero series is blue</strong>; others are neutral, told apart by texture/dash/marker —
+        not by a second hue. Full JSON schemas live in the skill's
+        <code>references/charts.md</code>.</p>
+
+      <div class="ks-item" id="chart-bar">
+        <h3>Bar — grouped &amp; stacked</h3>
+        <p class="ks-note">Benchmark comparisons. Set <code>"mode": "stacked"</code> for composition. Try the legend toggles.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="bar" data-src="assets/data/bar.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart-wrap"&gt;
+  &lt;div class="chart" data-chart="bar"
+       data-src="assets/data/bar.json"
+       data-fallback="assets/figures/bar.png"&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;script src="assets/js/charts.js"&gt;&lt;/script&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="chart-line">
+        <h3>Line — multi-series</h3>
+        <p class="ks-note">Training curves, scaling laws. Solid blue hero line draws on; neutral lines use dash patterns.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="line" data-src="assets/data/line.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart" data-chart="line" data-src="assets/data/line.json"&gt;&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="chart-scatter">
+        <h3>Scatter — with optional bubble size</h3>
+        <p class="ks-note">Pareto fronts, ablations. A 3rd value per point scales bubble area. Series use distinct marker shapes.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="scatter" data-src="assets/data/scatter.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart" data-chart="scatter" data-src="assets/data/scatter.json"&gt;&lt;/div&gt;
+&lt;!-- points: [x, y] or [x, y, size] for bubbles --&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="chart-area">
+        <h3>Area — stacked or overlapping</h3>
+        <p class="ks-note">Cumulative composition over time. <code>"mode": "overlap"</code> for translucent overlays.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="area" data-src="assets/data/area.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart" data-chart="area" data-src="assets/data/area.json"&gt;&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="chart-hbar">
+        <h3>Horizontal bar — ranked</h3>
+        <p class="ks-note">Leaderboards and ranked comparisons. The highlighted item is blue.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="hbar" data-src="assets/data/hbar.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart" data-chart="hbar" data-src="assets/data/hbar.json"&gt;&lt;/div&gt;</code></pre></details>
+      </div>
+
+      <div class="ks-item" id="chart-donut">
+        <h3>Donut — composition</h3>
+        <p class="ks-note">Use sparingly, for a single composition. Sequential blue ramp; exact values on hover.</p>
+        <div class="ks-demo"><div class="chart-wrap"><div class="chart" data-chart="donut" data-src="assets/data/donut.json"></div></div></div>
+        <details class="ks-code"><summary>Snippet</summary><pre class="snippet"><code>&lt;div class="chart" data-chart="donut" data-src="assets/data/donut.json"&gt;&lt;/div&gt;</code></pre></details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wide">
+    <div class="foot-grid">
+      <div><a class="brand-mark" href="index.html"><span class="brand-word">Research Website Template</span></a>
+        <p class="muted" style="max-width:34ch">Fork it, replace the content, keep the system.</p></div>
+      <nav><a href="index.html">Starter</a> · <a href="#charts">Charts</a> · <a href="https://www.appliedintuition.com" target="_blank" rel="noopener">Applied Intuition ↗</a></nav>
+    </div>
+    <p class="copyright">© 2026 Applied Intuition.</p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/charts.js"></script>
+<script src="assets/js/tables.js"></script>
+</body>
+</html>

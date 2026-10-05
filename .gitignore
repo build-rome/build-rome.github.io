@@ -1,0 +1,25 @@
+# Heavy media never lives in git — host it on a CDN / HF dataset repo and embed
+# the resolve URL. See CLAUDE.md.
+*.mp4
+*.mov
+*.gif
+*.webm
+
+# Python preview server env
+.venv/
+__pycache__/
+*.pyc
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Exception: the hero teaser is small (< 10 MB total) and ships with the site.
+!assets/media/teaser.mp4
+!assets/media/teaser_512.mp4
+!assets/media/results.mp4
+!assets/media/results_720.mp4
+!assets/media/comparisons/**/*.mp4

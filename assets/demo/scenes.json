@@ -1,0 +1,112 @@
+{
+ "atlas10": {
+  "faces_full": 58722713,
+  "faces_hi": 1480589,
+  "hi_mb": 7.7
+ },
+ "atlas11": {
+  "hi_mb": 7.3,
+  "faces_full": null,
+  "faces_hi": null
+ },
+ "atlas15": {
+  "faces_full": 33027896,
+  "faces_hi": 1427826,
+  "hi_mb": 7.5
+ },
+ "atlas33": {
+  "hi_mb": 7.7,
+  "faces_full": null,
+  "faces_hi": null
+ },
+ "atlas6": {
+  "faces_full": 43857239,
+  "faces_hi": 1404076,
+  "hi_mb": 7.3
+ },
+ "france6": {
+  "faces_full": 15438944,
+  "faces_hi": 1494301,
+  "hi_mb": 6.9
+ },
+ "france7": {
+  "faces_full": 3427001,
+  "faces_hi": 1481073,
+  "hi_mb": 7.4
+ },
+ "mipnerf7": {
+  "faces_full": 16539274,
+  "faces_hi": 1473608,
+  "hi_mb": 7.6
+ },
+ "moge_3": {
+  "hi_mb": 7.2,
+  "faces_full": null,
+  "faces_hi": null
+ },
+ "moge_4": {
+  "faces_full": 16425427,
+  "faces_hi": 1491167,
+  "hi_mb": 7.6
+ },
+ "moge_6": {
+  "faces_full": 68842034,
+  "faces_hi": 1446330,
+  "hi_mb": 7.3
+ },
+ "moge_7": {
+  "faces_full": 34029836,
+  "faces_hi": 1476557,
+  "hi_mb": 7.4
+ },
+ "nerf1": {
+  "faces_full": 19234791,
+  "faces_hi": 1496810,
+  "hi_mb": 7.8
+ },
+ "nerf8": {
+  "faces_full": 3557643,
+  "faces_hi": 1498311,
+  "hi_mb": 7.8
+ },
+ "new_york_apt4": {
+  "faces_full": 16848638,
+  "faces_hi": 1435543,
+  "hi_mb": 7.2
+ },
+ "robot12": {
+  "faces_full": 12279774,
+  "faces_hi": 1480324,
+  "hi_mb": 7.7
+ },
+ "robot5": {
+  "faces_full": 39223550,
+  "faces_hi": 1466764,
+  "hi_mb": 7.6
+ },
+ "robot6": {
+  "faces_full": 30907133,
+  "faces_hi": 1453358,
+  "hi_mb": 7.5
+ },
+ "robot8": {
+  "faces_full": 14408126,
+  "faces_hi": 1402171,
+  "hi_mb": 7.1
+ },
+ "soho_house": {
+  "faces_full": 15758353,
+  "faces_hi": 1464009,
+  "hi_mb": 7.5
+ },
+ "tourist4": {
+  "faces_full": 9628249,
+  "faces_hi": 1451917,
+  "hi_mb": 7.4
+ },
+ "nex_2": {
+  "faces_full": 16773653,
+  "faces_hi": 1488919,
+  "hi_mb": 7.9
+ }
+}

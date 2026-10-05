@@ -1,0 +1,14 @@
+{
+  "type": "line",
+  "title": "Closed-loop score vs. training steps",
+  "xLabel": "training steps",
+  "yLabel": "closed-loop score",
+  "xFormat": "si",
+  "yFormat": "f2",
+  "note": "Mean over 3 seeds. Our recipe (blue) reaches a higher plateau sooner.",
+  "series": [
+    { "name": "Ours", "highlight": true, "points": [[0, 0.08], [50000, 0.34], [100000, 0.52], [200000, 0.68], [400000, 0.79], [800000, 0.86], [1200000, 0.9]] },
+    { "name": "Imitation", "points": [[0, 0.06], [50000, 0.22], [100000, 0.33], [200000, 0.44], [400000, 0.52], [800000, 0.57], [1200000, 0.6]] },
+    { "name": "Prior SOTA", "points": [[0, 0.05], [50000, 0.28], [100000, 0.4], [200000, 0.55], [400000, 0.66], [800000, 0.72], [1200000, 0.75]] }
+  ]
+}
