@@ -19,7 +19,6 @@ Thumbs.db
 
 # Exception: the hero teaser is small (< 10 MB total) and ships with the site.
 !assets/media/teaser.mp4
-!assets/media/teaser_512.mp4
 !assets/media/results.mp4
-!assets/media/results_720.mp4
+!assets/media/results_1000.mp4
 !assets/media/comparisons/**/*.mp4

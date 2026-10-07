@@ -65,9 +65,6 @@
     // *properties* (not just the markup attributes) when play() is called from script. If the
     // first play() is refused (not ready yet), try again once the video can play.
     vids.forEach(function (v) { v.muted = true; v.defaultMuted = true; v.playsInline = true; });
-    // phones: hands off. iOS autoplays a muted inline <video autoplay> when it scrolls into view,
-    // and a scripted pause() on it makes iOS refuse any later play() -- so no observer here.
-    if (window.innerWidth <= 640) return;
     function tryPlay(v) {
       var p = v.play();
       if (p && p.catch) p.catch(function () {
@@ -76,6 +73,16 @@
     }
     if (!("IntersectionObserver" in window)) {
       vids.forEach(tryPlay);
+      return;
+    }
+    // phones: play() when a video scrolls into view, and never pause() -- iOS refuses any later
+    // play() once a script has paused an autoplaying video (the off-screen one below the fold
+    // does not start by itself because its wrapper is still hidden by the reveal animation)
+    if (window.innerWidth <= 640) {
+      var mobs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (e.isIntersecting && e.target.paused) tryPlay(e.target); });
+      }, { threshold: 0.1 });
+      vids.forEach(function (v) { mobs.observe(v); });
       return;
     }
     var obs = new IntersectionObserver(function (entries) {

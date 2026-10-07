@@ -145,11 +145,13 @@
   <section id="results">
     <div class="wide reveal">
       <!-- results reel: 47 scenes, input photo -> depth sweep -> mesh flythrough, six at a time.
-           Same plain <video> shape as the teaser (see the note there). -->
+           Same plain <video> shape as the teaser; phones get the 1000 px encode (src set inline before the fetch). -->
       <figure class="results-reel">
         <video src="assets/media/results.mp4" poster="assets/media/results_poster.jpg" autoplay muted loop playsinline preload="metadata" data-autoplay
+               data-small="assets/media/results_1000.mp4"
                aria-label="Results on 47 scenes: each input photo sweeps front to back into its reconstructed mesh, then the camera flies through it.">
         </video>
+        <script>(function(){var v=document.currentScript.previousElementSibling;if(window.innerWidth<=640&&v.dataset.small)v.src=v.dataset.small;})();</script>
       </figure>
     </div>
   </section>
