@@ -134,11 +134,11 @@
       <figure class="hero-media reveal">
         <!-- H.264 at 1024 px; phones get the 512 px encode via data-small (swapped in
              by main.js before the first load). -->
-        <video poster="assets/media/teaser_poster.jpg" autoplay muted loop playsinline preload="auto" data-autoplay
+        <video src="assets/media/teaser.mp4" poster="assets/media/teaser_poster.jpg" autoplay muted loop playsinline preload="auto" data-autoplay
                data-small="assets/media/teaser_512.mp4"
                aria-label="From a single photo of the Colosseum, sparse voxels grow into the full reconstructed scene mesh.">
-          <source src="assets/media/teaser.mp4" type="video/mp4">
         </video>
+        <script>(function(){var v=document.currentScript.previousElementSibling;if(window.innerWidth<=640&&v.dataset.small)v.src=v.dataset.small;})();</script>
       </figure>
     </div>
   </section>
@@ -149,11 +149,11 @@
       <!-- results reel: 47 scenes, input photo -> depth sweep -> mesh flythrough, six at a time.
            Video files are git-ignored (see CLAUDE.md); phones get results_720.mp4 via data-small. -->
       <figure class="results-reel">
-        <video poster="assets/media/results_poster.jpg" autoplay muted loop playsinline preload="metadata" data-autoplay
+        <video src="assets/media/results.mp4" poster="assets/media/results_poster.jpg" autoplay muted loop playsinline preload="metadata" data-autoplay
                data-small="assets/media/results_720.mp4"
                aria-label="Results on 47 scenes: each input photo sweeps front to back into its reconstructed mesh, then the camera flies through it.">
-          <source src="assets/media/results.mp4" type="video/mp4">
         </video>
+        <script>(function(){var v=document.currentScript.previousElementSibling;if(window.innerWidth<=640&&v.dataset.small)v.src=v.dataset.small;})();</script>
       </figure>
     </div>
   </section>
