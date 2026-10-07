@@ -208,3 +208,12 @@ kbd { font-family: var(--font-mono); font-size: 0.85em; padding: 0.05em 0.4em; b
 .demo-preview img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 6px; }
 @media (hover: none) { .demo-preview { display: none; } }
 .viewer { margin-top: 0; }
+
+/* teaser + results reel: always-on background videos. No native UI, ever (iOS draws a grey
+   play button over a paused/blocked inline video), and no tap-to-pause. */
+video[data-autoplay] { pointer-events: none; }
+video[data-autoplay]::-webkit-media-controls,
+video[data-autoplay]::-webkit-media-controls-panel,
+video[data-autoplay]::-webkit-media-controls-start-playback-button,
+video[data-autoplay]::-webkit-media-controls-overlay-play-button,
+video[data-autoplay]::-webkit-media-controls-enclosure { display: none !important; opacity: 0 !important; -webkit-appearance: none !important; }

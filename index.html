@@ -124,8 +124,8 @@
           </p>
         </div>
         <div class="actions">
-          <span class="btn btn-disabled" aria-disabled="true">Paper (on release)</span>
-          <span class="btn btn-disabled" aria-disabled="true">Code (on release)</span>
+          <a class="btn" href="https://arxiv.org/abs/2610.08790" target="_blank" rel="noopener">Paper</a>
+          <span class="btn btn-disabled" aria-disabled="true">Code (soon)</span>
           <button class="btn" type="button" id="bibtex-btn">BibTeX</button>
         </div>
       </div>
@@ -134,7 +134,7 @@
       <figure class="hero-media reveal">
         <!-- H.264 at 1024 px. Plain <video src autoplay muted playsinline>: iOS only autoplays
              this exact shape (no <source> children, no src swapping, no scripted pause). -->
-        <video src="assets/media/teaser.mp4" poster="assets/media/teaser_poster.jpg" autoplay muted loop playsinline preload="auto" data-autoplay
+        <video src="assets/media/teaser.mp4" poster="assets/media/teaser_poster.jpg" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen" preload="auto" data-autoplay
                aria-label="From a single photo of the Colosseum, sparse voxels grow into the full reconstructed scene mesh.">
         </video>
       </figure>
@@ -143,11 +143,11 @@
 
   <!-- ===================== Results reel ===================== -->
   <section id="results">
-    <div class="wide reveal">
+    <div class="wide">
       <!-- results reel: 47 scenes, input photo -> depth sweep -> mesh flythrough, six at a time.
            Same plain <video> shape as the teaser; phones get the 1000 px encode (src set inline before the fetch). -->
       <figure class="results-reel">
-        <video src="assets/media/results.mp4" poster="assets/media/results_poster.jpg" autoplay muted loop playsinline preload="metadata" data-autoplay
+        <video src="assets/media/results.mp4" poster="assets/media/results_poster.jpg" autoplay muted loop playsinline disablepictureinpicture disableremoteplayback controlslist="nodownload noplaybackrate nofullscreen" preload="metadata" data-autoplay
                data-small="assets/media/results_1000.mp4"
                aria-label="Results on 47 scenes: each input photo sweeps front to back into its reconstructed mesh, then the camera flies through it.">
         </video>

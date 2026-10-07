@@ -56,11 +56,8 @@
   function initVideos() {
     var vids = Array.prototype.slice.call(document.querySelectorAll("video[data-autoplay]"));
     if (!vids.length) return;
-    // reduced motion: never autoplay; show the poster with controls instead
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      vids.forEach(function (v) { v.controls = true; v.removeAttribute("autoplay"); });
-      return;
-    }
+    // these are muted background reels: never show native controls, even under reduced motion
+    vids.forEach(function (v) { v.controls = false; v.removeAttribute("controls"); });
     // Mobile Safari/Chrome only allow autoplay for muted, inline video, and they check the
     // *properties* (not just the markup attributes) when play() is called from script. If the
     // first play() is refused (not ready yet), try again once the video can play.
