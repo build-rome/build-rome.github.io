@@ -77,7 +77,10 @@
       });
     }
 
+    // phones: never pause() -- iOS refuses a later scripted play() on a video a script paused
+    var phone = window.innerWidth <= 640;
     function pauseRow(row) {
+      if (phone) return;
       row.querySelectorAll("video").forEach(function (v) { v.pause(); });
     }
 

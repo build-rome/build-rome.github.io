@@ -152,12 +152,16 @@ main > section:not(.hero):nth-of-type(odd)  { background: transparent; }
 @media (max-width: 1340px) {
   .cmp.is-enhanced .cmp-arrow { display: none; }
 }
-}
-/* phones: 3 x 2 grid with a label under each tile */
+/* phones: 3 x 2 grid with a label under each tile; the label wraps and shrinks to fit its tile */
 @media (max-width: 760px) {
   .cmp-head { display: none; }
   .cmp-row { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-2); }
-  .cmp-tile figcaption { display: inline-block; }
+  .cmp-tile figcaption { display: inline-block; max-width: 100%; white-space: normal; line-height: 1.2;
+    font-size: 0.62rem; letter-spacing: 0.05em; padding: 0.2rem 0.4rem; }
+}
+@media (max-width: 420px) {
+  .cmp-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cmp-tile figcaption { font-size: 0.68rem; }
 }
 
 .demo-note { margin-top: calc(-1 * var(--space-2)); font-size: 0.95em; }
