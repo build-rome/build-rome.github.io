@@ -68,21 +68,36 @@
     }
     // reduced motion: never autoplay; show the poster with controls instead
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      vids.forEach(function (v) { v.controls = true; });
+      vids.forEach(function (v) { v.controls = true; v.removeAttribute("autoplay"); });
       return;
     }
+    // Mobile Safari/Chrome only allow autoplay for muted, inline video, and they check the
+    // *properties* (not just the markup attributes) when play() is called from script. If the
+    // first play() is refused (not ready yet), try again once the video can play.
+    vids.forEach(function (v) { v.muted = true; v.defaultMuted = true; v.playsInline = true; });
+    function tryPlay(v) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {
+        v.addEventListener("canplay", function once() { v.removeEventListener("canplay", once); var q = v.play(); if (q && q.catch) q.catch(function () {}); });
+      });
+    }
     if (!("IntersectionObserver" in window)) {
-      vids.forEach(function (v) { var p = v.play(); if (p && p.catch) p.catch(function () {}); });
+      vids.forEach(tryPlay);
       return;
     }
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         var v = e.target;
-        if (e.isIntersecting) { var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+        v._onScreen = e.isIntersecting;
+        if (e.isIntersecting) tryPlay(v);
         else v.pause();
       });
     }, { threshold: 0.25 });
     vids.forEach(function (v) { obs.observe(v); });
+    // iOS also drops autoplay when the tab was backgrounded; resume whatever is on screen
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden) vids.forEach(function (v) { if (v.paused && v._onScreen !== false) tryPlay(v); });
+    });
   }
 
   /* ---- tabs: segmented control with a sliding blue thumb ----------------- */
