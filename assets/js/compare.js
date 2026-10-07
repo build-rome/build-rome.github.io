@@ -59,21 +59,21 @@
       return row;
     }
 
-    // start every video in the row from frame 0 together so views line up
+    // Play every video in the row right away: mobile Safari only starts fetching a video when
+    // play() is called (it ignores preload), so waiting for "canplay" first would wait forever.
+    // Once all five are actually playing, rewind them together so the views line up.
     function playRow(row) {
       if (reduced) return;
       var vids = Array.prototype.slice.call(row.querySelectorAll("video"));
       var pending = vids.length;
-      function go() {
-        if (!onScreen) return;
-        vids.forEach(function (v) { v.currentTime = 0; var p = v.play(); if (p && p.catch) p.catch(function () {}); });
-      }
       vids.forEach(function (v) {
-        if (v.readyState >= 3) { if (--pending === 0) go(); return; }
-        v.addEventListener("canplay", function once() {
-          v.removeEventListener("canplay", once);
-          if (--pending === 0) go();
+        v.muted = true; v.playsInline = true;
+        v.addEventListener("playing", function once() {
+          v.removeEventListener("playing", once);
+          if (--pending === 0 && onScreen) vids.forEach(function (w) { try { w.currentTime = 0; } catch (e) {} });
         });
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
       });
     }
 

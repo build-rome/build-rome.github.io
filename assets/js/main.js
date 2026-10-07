@@ -66,9 +66,6 @@
     // *properties* (not just the markup attributes) when play() is called from script. If the
     // first play() is refused (not ready yet), try again once the video can play.
     vids.forEach(function (v) { v.muted = true; v.defaultMuted = true; v.playsInline = true; });
-    // phones: leave it to the autoplay attribute, like any plain <video autoplay muted playsinline>;
-    // scripted play()/pause() is what iOS is pickiest about
-    if (window.innerWidth <= 640) return;
     function tryPlay(v) {
       var p = v.play();
       if (p && p.catch) p.catch(function () {
