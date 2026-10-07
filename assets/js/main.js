@@ -50,54 +50,123 @@
     items.forEach(function (i) { obs.observe(i); });
   }
 
-  /* ---- lazy video playback ----------------------------------------------- */
-  // Videos with the `data-autoplay` attribute play only while on screen and
-  // pause when they leave, so the page never streams every clip at once.
+  /* ---- shared video playback -------------------------------------------- */
+  function reducedMotion() {
+    return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+
+  // Both the reels and comparison tiles use the same failure handling. A rejected
+  // play() is not necessarily a loading problem: policy blocks need a real user
+  // gesture, not another canplay listener. Keep native controls as that fallback.
+  function createPlayback(v, onChange) {
+    var wanted = false, pending = false, blocked = false, attempt = 0;
+    v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+    v.autoplay = false; // the viewport owner, not the browser, starts/stops playback
+    v.controls = !!reducedMotion();
+    v.setAttribute("data-playback", "idle");
+
+    function state(value) {
+      if (v.getAttribute("data-playback") === value) return;
+      v.setAttribute("data-playback", value);
+      if (onChange) onChange();
+    }
+    function failed(error, id) {
+      if (id !== attempt) return; // ignore a promise from an old pause/source/row
+      pending = false;
+      if (!wanted || !v.isConnected || document.hidden) return;
+      if (error && error.name === "AbortError") {
+        v.controls = true; state("error"); return; // canplay may still recover a transient abort
+      }
+      blocked = true;
+      v.controls = true;
+      state(error && error.name === "NotAllowedError" ? "blocked" : "error");
+      console.warn("Video playback failed:", v.currentSrc || v.getAttribute("src"), error);
+    }
+    function play(userInitiated) {
+      if (reducedMotion() && !userInitiated) { v.controls = true; return; }
+      if (document.hidden || !v.isConnected || (blocked && !userInitiated)) return;
+      wanted = true;
+      if (pending || !v.paused) return;
+      blocked = false;
+      pending = true;
+      var id = ++attempt;
+      v.muted = true;
+      v.preload = "auto";
+      state("loading");
+      try {
+        var promise = v.play();
+        if (promise && promise.then) promise.then(function () {
+          if (id === attempt) pending = false;
+        }, function (error) { failed(error, id); });
+        else pending = false;
+      } catch (error) { failed(error, id); }
+    }
+    function pause() {
+      wanted = false; pending = false; ++attempt;
+      v.pause();
+      if (!blocked) state("paused");
+    }
+    // Register once, before the first attempt; don't miss an already-fired
+    // canplay event or accumulate one-shot handlers on every scroll.
+    v.addEventListener("canplay", function () {
+      if (wanted && !blocked && v.paused) play(false);
+    });
+    v.addEventListener("playing", function () {
+      if (v.paused) return; // a queued event can arrive after the viewport owner paused
+      if (document.hidden || !v.isConnected) { pause(); return; }
+      wanted = true; pending = false; blocked = false;
+      state("playing");
+    });
+    v.addEventListener("pause", function () {
+      if (!v.paused) return;
+      wanted = false; pending = false; ++attempt;
+      if (!blocked) state("paused");
+    });
+    v.addEventListener("waiting", function () { if (wanted) state("loading"); });
+    v.addEventListener("error", function () {
+      pending = false; blocked = true; ++attempt;
+      v.controls = true;
+      state("error");
+      console.warn("Video media error:", v.currentSrc || v.getAttribute("src"), v.error);
+    });
+    return { play: play, pause: pause };
+  }
+  window.RWVideo = { create: createPlayback, reducedMotion: reducedMotion };
+
+  /* ---- viewport-managed teaser and results ------------------------------ */
   function initVideos() {
     var vids = Array.prototype.slice.call(document.querySelectorAll("video[data-autoplay]"));
-    if (!vids.length) return;
-    // reduced motion: never autoplay; show the poster with controls instead
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      vids.forEach(function (v) { v.controls = true; v.removeAttribute("autoplay"); });
-      return;
-    }
-    // Mobile Safari/Chrome only allow autoplay for muted, inline video, and they check the
-    // *properties* (not just the markup attributes) when play() is called from script. If the
-    // first play() is refused (not ready yet), try again once the video can play.
-    vids.forEach(function (v) { v.muted = true; v.defaultMuted = true; v.playsInline = true; });
-    function tryPlay(v) {
-      var p = v.play();
-      if (p && p.catch) p.catch(function () {
-        v.addEventListener("canplay", function once() { v.removeEventListener("canplay", once); var q = v.play(); if (q && q.catch) q.catch(function () {}); });
-      });
-    }
-    if (!("IntersectionObserver" in window)) {
-      vids.forEach(tryPlay);
-      return;
-    }
-    // phones: play() when a video scrolls into view, and never pause() -- iOS refuses any later
-    // play() once a script has paused an autoplaying video (the off-screen one below the fold
-    // does not start by itself because its wrapper is still hidden by the reveal animation)
-    if (window.innerWidth <= 640) {
-      var mobs = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (e.isIntersecting && e.target.paused) tryPlay(e.target); });
-      }, { threshold: 0.1 });
-      vids.forEach(function (v) { mobs.observe(v); });
-      return;
-    }
-    var obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        var v = e.target;
-        v._onScreen = e.isIntersecting;
-        if (e.isIntersecting) tryPlay(v);
-        else v.pause();
-      });
-    }, { threshold: 0.25 });
-    vids.forEach(function (v) { obs.observe(v); });
-    // iOS also drops autoplay when the tab was backgrounded; resume whatever is on screen
-    document.addEventListener("visibilitychange", function () {
-      if (!document.hidden) vids.forEach(function (v) { if (v.paused && v._onScreen !== false) tryPlay(v); });
+    vids.forEach(function (v) {
+      v._onScreen = false;
+      v._playback = createPlayback(v);
     });
+    function update(v, visible) {
+      v._onScreen = visible;
+      if (visible && !document.hidden) v._playback.play(false);
+      else v._playback.pause();
+    }
+    function refresh() {
+      vids.forEach(function (v) {
+        var r = v.getBoundingClientRect();
+        update(v, r.width > 0 && r.height > 0 && r.bottom > 0 && r.top < window.innerHeight &&
+          r.right > 0 && r.left < window.innerWidth);
+      });
+    }
+    if ("IntersectionObserver" in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { update(e.target, e.isIntersecting && e.intersectionRatio > 0); });
+      }, { threshold: 0.01 });
+      vids.forEach(function (v) { obs.observe(v); });
+    } else {
+      window.addEventListener("scroll", refresh, { passive: true });
+      window.addEventListener("resize", refresh);
+    }
+    // Use the same lifecycle on phones, tablets, and desktop. A narrow viewport
+    // is not a reliable browser detector, and must not skip tab/BFCache recovery.
+    document.addEventListener("visibilitychange", refresh);
+    window.addEventListener("pageshow", refresh);
+    refresh();
   }
 
   /* ---- tabs: segmented control with a sliding blue thumb ----------------- */

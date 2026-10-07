@@ -118,6 +118,10 @@ main > section:not(.hero):nth-of-type(odd)  { background: transparent; }
 /* per-tile labels only where the header row is hidden (narrow screens) */
 .cmp-tile figcaption { display: none; border: 0; margin-top: 0.35rem; }
 
+/* Shown only when autoplay is blocked or reduced motion requests manual playback. */
+.cmp-play:not([hidden]) { display: flex; margin: var(--space-2) auto 0; }
+.cmp-play[hidden] { display: none; }
+
 /* arrows sit outside the row on wide screens; hidden until JS wires them */
 .cmp-arrow {
   display: none; position: absolute; top: 50%; transform: translateY(-50%);
@@ -145,8 +149,9 @@ main > section:not(.hero):nth-of-type(odd)  { background: transparent; }
 
 .cmp-row.slide-left  { animation: cmp-in-left 0.45s ease both; }
 .cmp-row.slide-right { animation: cmp-in-right 0.45s ease both; }
-@keyframes cmp-in-left  { from { transform: translateX(6%);  opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes cmp-in-right { from { transform: translateX(-6%); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Keep incoming video rows visible while requesting playback. */
+@keyframes cmp-in-left  { from { transform: translateX(6%); } to { transform: none; } }
+@keyframes cmp-in-right { from { transform: translateX(-6%); } to { transform: none; } }
 
 /* no room for arrows outside the row: the thumbnail strip is the picker */
 @media (max-width: 1340px) {
