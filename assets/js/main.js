@@ -56,7 +56,6 @@
   function initVideos() {
     var vids = Array.prototype.slice.call(document.querySelectorAll("video[data-autoplay]"));
     if (!vids.length) return;
-    // (the phone encode is chosen by an inline script right after each <video>, before the fetch starts)
     // reduced motion: never autoplay; show the poster with controls instead
     if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       vids.forEach(function (v) { v.controls = true; v.removeAttribute("autoplay"); });
@@ -66,6 +65,9 @@
     // *properties* (not just the markup attributes) when play() is called from script. If the
     // first play() is refused (not ready yet), try again once the video can play.
     vids.forEach(function (v) { v.muted = true; v.defaultMuted = true; v.playsInline = true; });
+    // phones: hands off. iOS autoplays a muted inline <video autoplay> when it scrolls into view,
+    // and a scripted pause() on it makes iOS refuse any later play() -- so no observer here.
+    if (window.innerWidth <= 640) return;
     function tryPlay(v) {
       var p = v.play();
       if (p && p.catch) p.catch(function () {
