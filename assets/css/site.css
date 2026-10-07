@@ -145,8 +145,9 @@ main > section:not(.hero):nth-of-type(odd)  { background: transparent; }
 
 .cmp-row.slide-left  { animation: cmp-in-left 0.45s ease both; }
 .cmp-row.slide-right { animation: cmp-in-right 0.45s ease both; }
-@keyframes cmp-in-left  { from { transform: translateX(6%);  opacity: 0; } to { transform: none; opacity: 1; } }
-@keyframes cmp-in-right { from { transform: translateX(-6%); opacity: 0; } to { transform: none; opacity: 1; } }
+/* slide only (no opacity): iOS will not start a video whose element is transparent */
+@keyframes cmp-in-left  { from { transform: translateX(6%);  } to { transform: none; } }
+@keyframes cmp-in-right { from { transform: translateX(-6%); } to { transform: none; } }
 
 /* no room for arrows outside the row: the thumbnail strip is the picker */
 @media (max-width: 1340px) {

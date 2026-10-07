@@ -50,9 +50,9 @@
         var v = document.createElement("video");
         v.src = base + id + "/" + m + ".mp4";
         v.poster = base + id + "/" + m + "-poster.jpg";
-        v.muted = true; v.loop = true; v.playsInline = true;
-        v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
-        v.preload = onScreen ? "auto" : "none";       // nothing streams until the slider is on screen
+        v.muted = true; v.loop = true; v.playsInline = true; v.autoplay = true;
+        v.setAttribute("muted", ""); v.setAttribute("playsinline", ""); v.setAttribute("autoplay", "");
+        v.preload = onScreen ? "auto" : "metadata";   // the bulk streams only once the slider is on screen
         v.setAttribute("aria-label", labels[k + 1] + " reconstruction, scene " + (i + 1));
         row.appendChild(tile(labels[k + 1], v, m === "ours", m));
       });
@@ -67,13 +67,16 @@
       var vids = Array.prototype.slice.call(row.querySelectorAll("video"));
       var pending = vids.length;
       vids.forEach(function (v) {
-        v.muted = true; v.playsInline = true;
+        v.muted = true; v.defaultMuted = true; v.playsInline = true;
         v.addEventListener("playing", function once() {
           v.removeEventListener("playing", once);
           if (--pending === 0 && onScreen) vids.forEach(function (w) { try { w.currentTime = 0; } catch (e) {} });
         });
         var p = v.play();
-        if (p && p.catch) p.catch(function () {});
+        if (p && p.catch) p.catch(function () {
+          // refused (not ready yet): try once more when it can play
+          v.addEventListener("canplay", function again() { v.removeEventListener("canplay", again); var q = v.play(); if (q && q.catch) q.catch(function () {}); });
+        });
       });
     }
 

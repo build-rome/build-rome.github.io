@@ -253,7 +253,7 @@
   <!-- Video files are git-ignored: host assets/media/comparisons on a CDN before
        deploying and point data-base (and the static row below) at it (CLAUDE.md). -->
   <section id="comparisons">
-    <div class="wide reveal">
+    <div class="wide">
       <p class="eyebrow">Comparisons</p>
       <div class="cmp" tabindex="0" aria-roledescription="carousel" aria-label="Method comparisons"
            data-base="assets/media/comparisons/" data-scenes="atlas11,atlas13,nerf1,atlas33,atlas6,france6,moge_4,moge_6,tourist2"
@@ -271,11 +271,11 @@
           <div class="cmp-viewport">
             <div class="cmp-row">
               <figure class="cmp-tile"><img src="assets/media/comparisons/atlas11/input.jpg" width="768" height="768" alt="Input photo, scene 1"><figcaption data-method="input">Input</figcaption></figure>
-              <figure class="cmp-tile is-ours"><video src="assets/media/comparisons/atlas11/ours.mp4" poster="assets/media/comparisons/atlas11/ours-poster.jpg" muted loop playsinline preload="none" aria-label="Ours reconstruction, scene 1"></video><figcaption data-method="ours">Ours</figcaption></figure>
-              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/world-tracing.mp4" poster="assets/media/comparisons/atlas11/world-tracing-poster.jpg" muted loop playsinline preload="none" aria-label="World Tracing reconstruction, scene 1"></video><figcaption data-method="world-tracing">World Tracing</figcaption></figure>
-              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/genrecon.mp4" poster="assets/media/comparisons/atlas11/genrecon-poster.jpg" muted loop playsinline preload="none" aria-label="GenRecon reconstruction, scene 1"></video><figcaption data-method="genrecon">GenRecon</figcaption></figure>
-              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/volfill.mp4" poster="assets/media/comparisons/atlas11/volfill-poster.jpg" muted loop playsinline preload="none" aria-label="VolFill reconstruction, scene 1"></video><figcaption data-method="volfill">VolFill</figcaption></figure>
-              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/lyra2.mp4" poster="assets/media/comparisons/atlas11/lyra2-poster.jpg" muted loop playsinline preload="none" aria-label="Lyra 2.0 reconstruction, scene 1"></video><figcaption data-method="lyra2">Lyra 2.0</figcaption></figure>
+              <figure class="cmp-tile is-ours"><video src="assets/media/comparisons/atlas11/ours.mp4" poster="assets/media/comparisons/atlas11/ours-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Ours reconstruction, scene 1"></video><figcaption data-method="ours">Ours</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/world-tracing.mp4" poster="assets/media/comparisons/atlas11/world-tracing-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="World Tracing reconstruction, scene 1"></video><figcaption data-method="world-tracing">World Tracing</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/genrecon.mp4" poster="assets/media/comparisons/atlas11/genrecon-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="GenRecon reconstruction, scene 1"></video><figcaption data-method="genrecon">GenRecon</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/volfill.mp4" poster="assets/media/comparisons/atlas11/volfill-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="VolFill reconstruction, scene 1"></video><figcaption data-method="volfill">VolFill</figcaption></figure>
+              <figure class="cmp-tile"><video src="assets/media/comparisons/atlas11/lyra2.mp4" poster="assets/media/comparisons/atlas11/lyra2-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Lyra 2.0 reconstruction, scene 1"></video><figcaption data-method="lyra2">Lyra 2.0</figcaption></figure>
             </div>
           </div>
           <button class="cmp-arrow cmp-next" type="button" aria-label="Next scene">&#8250;</button>
